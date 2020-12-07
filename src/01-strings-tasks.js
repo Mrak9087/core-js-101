@@ -18,7 +18,7 @@
  *   'aa',''    => 'aa'
  *   '',  'bb'  => 'bb'
  */
-function concatenateStrings(value1, value2 ) {
+function concatenateStrings(value1, value2) {
   return value1.concat(value2);
 }
 
@@ -52,7 +52,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-  return 'Hello, '.concat(firstName,' ',lastName,'!');
+  return 'Hello, '.concat(firstName, ' ', lastName, '!');
 }
 
 /**
@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.replace('Hello,','').replace('!','').trim;
+  return value.replace('Hello,', '').replace('!', '').trim();
 }
 
 
@@ -81,7 +81,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-  return value.substring(0,1);
+  return value.substring(0, 1);
 }
 
 /**
@@ -127,7 +127,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    return str.replace(value,'');
+  return str.replace(value, '');
 }
 
 /**
@@ -142,7 +142,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-  return str.slice(1,-1);
+  return str.slice(1, -1);
 }
 
 
@@ -203,42 +203,39 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  let arr = [];
-  for (let i = 0; i < height; i++){
+  const arr = [];
+  for (let i = 0; i < height; i += 1) {
     arr.push([]);
-    for (let j = 0; j < width; j++){
-      if (i == 0){
-        if (j == 0){
+    for (let j = 0; j < width; j += 1) {
+      if (i === 0) {
+        if (j === 0) {
           arr[i].push('┌');
-        }else if (j < width-1){
+        } else if (j < width - 1) {
           arr[i].push('─');
-        }else {
+        } else {
           arr[i].push('┐');
         }
-      }else if (i < height-1){
-        if (j == 0){
+      } else if (i < height - 1) {
+        if (j === 0) {
           arr[i].push('│');
-        }else if (j < width-1){
+        } else if (j < width - 1) {
           arr[i].push(' ');
-        }else {
+        } else {
           arr[i].push('│');
         }
-      }else {
-        if (j == 0){
-          arr[i].push('└');
-        }else if (j < width-1){
-          arr[i].push('─');
-        }else {
-          arr[i].push('┘');
-        }
+      } else if (j === 0) {
+        arr[i].push('└');
+      } else if (j < width - 1) {
+        arr[i].push('─');
+      } else {
+        arr[i].push('┘');
       }
     }
   }
   let result = '';
-  arr.map((item)=>{
-    result += item.join('') + '\n';
-  }
-  );
+  arr.forEach((item) => {
+    result += `${item.join('')}\n`;
+  });
   return result;
 }
 
@@ -260,12 +257,12 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  let alfabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !?';
-  let crypt = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm !?';
+  const alfabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !?';
+  const crypt = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm !?';
 
   let result = '';
-  for (let i = 0; i < str.length; i++){
-    let pos = alfabet.indexOf(str[i]);
+  for (let i = 0; i < str.length; i += 1) {
+    const pos = alfabet.indexOf(str[i]);
     result += crypt[pos];
   }
   return result;
@@ -315,12 +312,11 @@ function isString(value) {
  */
 function getCardId(value) {
   const arr = [
-    'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
-    'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
-    'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
-    'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
-  ];
-  
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+
   return arr.indexOf(value);
 }
 
