@@ -20,6 +20,8 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
+
+// eslint-disable-next-line max-classes-per-file
 function Rectangle(width, height) {
   this.width = width;
   this.height = height;
@@ -113,34 +115,140 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
+class CSSSelector {
+  constructor() {
+    this.css = {};
+    this.textError = 'Element, id and pseudo-element should not occur more then one time inside the selector';
+  }
+
+  element(value) {
+    if (this.css.element) {
+      throw new Error(this.textError);
+    }
+    this.checkOrder('element');
+    this.css.element = value;
+    return this;
+  }
+
+  id(value) {
+    if (this.css.id) {
+      throw new Error(this.textError);
+    }
+    this.checkOrder('id');
+    this.css.id = `#${value}`;
+    return this;
+  }
+
+  pseudoElement(value) {
+    if (this.css.pseudoElement) {
+      throw new Error(this.textError);
+    }
+    this.checkOrder('pseudoElement');
+    this.css.pseudoElement = `::${value}`;
+    return this;
+  }
+
+  class(value) {
+    if (!this.css.class) {
+      this.css.class = '';
+    }
+    this.checkOrder('class');
+    this.css.class += `.${value}`;
+    return this;
+  }
+
+  attr(value) {
+    if (!this.css.attribute) {
+      this.css.attribute = '';
+    }
+    this.checkOrder('attribute');
+    this.css.attribute += `[${value}]`;
+    return this;
+  }
+
+  pseudoClass(value) {
+    if (!this.css.pseudoClass) {
+      this.css.pseudoClass = '';
+    }
+    this.checkOrder('pseudoClass');
+    this.css.pseudoClass += `:${value}`;
+    return this;
+  }
+
+  checkOrder(field) {
+    const order = ['element', 'id', 'class', 'attribute', 'pseudoClass', 'pseudoElement'];
+    const prev = order.slice(order.indexOf(field) + 1)
+      .some((f) => this.css[f]);
+    if (prev) {
+      throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+  }
+
+  stringify() {
+    let result = '';
+    if (this.css.element) {
+      result += this.css.element;
+    }
+    if (this.css.id) {
+      result += this.css.id;
+    }
+    if (this.css.class) {
+      result += this.css.class;
+    }
+    if (this.css.attribute) {
+      result += this.css.attribute;
+    }
+    if (this.css.pseudoClass) {
+      result += this.css.pseudoClass;
+    }
+    if (this.css.pseudoElement) {
+      result += this.css.pseudoElement;
+    }
+    return result;
+  }
+}
+
+class CSSCombiSelector {
+  constructor(firstSelector, combi, secondSelector) {
+    this.firstSelector = firstSelector;
+    this.combi = combi;
+    this.secondSelector = secondSelector;
+  }
+
+  stringify() {
+    return `${this.firstSelector.stringify()} ${this.combi} ${this.secondSelector.stringify()}`;
+  }
+}
+
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    return new CSSSelector().element(value);
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    return new CSSSelector().id(value);
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    return new CSSSelector().class(value);
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    return new CSSSelector().attr(value);
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    return new CSSSelector().pseudoClass(value);
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    return new CSSSelector().pseudoElement(value);
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    return new CSSCombiSelector(selector1, combinator, selector2);
   },
+
 };
 
 
