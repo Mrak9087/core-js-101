@@ -491,6 +491,7 @@ function getIntervalArray(start, end) {
   return Array.from(new Array(end - start + 1), (item, index) => start + index);
 }
 
+
 /**
  * Returns array containing only unique values from the specified array.
  *

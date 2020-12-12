@@ -53,6 +53,7 @@ function getRegexForGuid() {
  * @return {RegExp}
  *
  */
+
 function getRegexForPitSpot() {
   return /p.t/;
 }
